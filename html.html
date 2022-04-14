@@ -1,0 +1,764 @@
+<html><head></head><body>
+    <iframe sandbox="allow-scripts" scrolling="no" class="custom-event-list-iframe" srcdoc="<html>
+        <head>
+        <script src=&quot;https://cdn.streamelements.com/scripts/jquery_3.3.1.min.js&quot;></script>
+        <script>
+  function bindEvent(element, eventName, eventHandler) {
+          if (element.addEventListener) {
+              element.addEventListener(eventName, eventHandler, false);
+          } else if (element.attachEvent) {
+              element.attachEvent('on' + eventName, eventHandler);
+          }
+      }
+  
+  bindEvent(window, 'message', function (event) {
+    const data = event.data;
+    if (data.listener &amp;&amp; SE_API.responses[data.listener]) {
+      if (data.error) {
+        SE_API.responses[data.listener].reject(data.error);
+      } else {
+        SE_API.responses[data.listener].resolve(data.result);
+      }
+      return;
+    }
+  
+    if (data.listener &amp;&amp; data.listener.indexOf('resp_') === 0) {
+      return;
+    }
+  
+    const session = data.session;
+    delete data.session;
+  
+    const e = new CustomEvent('onEventReceived', {
+        detail: data
+    });
+    window.dispatchEvent(e);
+  
+    if (session) {
+      const sessionEvent = new CustomEvent('onSessionUpdate', {
+        detail: {
+          session: session
+        }
+      });
+      window.dispatchEvent(sessionEvent)
+    }
+  });
+  
+  window.addEventListener('load', function(event){
+      const initData = `{&quot;session&quot;:{&quot;data&quot;:{&quot;follower-latest&quot;:{&quot;name&quot;:&quot;deroqui&quot;},&quot;follower-week&quot;:{&quot;count&quot;:8},&quot;follower-month&quot;:{&quot;count&quot;:23},&quot;follower-goal&quot;:{&quot;amount&quot;:126},&quot;follower-total&quot;:{&quot;count&quot;:110},&quot;subscriber-latest&quot;:{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;amount&quot;:3,&quot;tier&quot;:&quot;prime&quot;,&quot;message&quot;:&quot;demorou muito para aparecer a opção de mandar a mensagem de sub, eu dei junto com a Anna Juuh&quot;,&quot;sender&quot;:null,&quot;gifted&quot;:null},&quot;subscriber-new-latest&quot;:{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;amount&quot;:1,&quot;message&quot;:null},&quot;subscriber-resub-latest&quot;:{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;amount&quot;:3,&quot;message&quot;:&quot;demorou muito para aparecer a opção de mandar a mensagem de sub, eu dei junto com a Anna Juuh&quot;},&quot;subscriber-gifted-latest&quot;:{&quot;name&quot;:&quot;&quot;,&quot;amount&quot;:0,&quot;message&quot;:&quot;&quot;,&quot;tier&quot;:&quot;&quot;,&quot;sender&quot;:&quot;&quot;},&quot;subscriber-week&quot;:{&quot;count&quot;:0},&quot;subscriber-month&quot;:{&quot;count&quot;:0},&quot;subscriber-goal&quot;:{&quot;amount&quot;:7},&quot;subscriber-total&quot;:{&quot;count&quot;:1},&quot;subscriber-points&quot;:{&quot;amount&quot;:1},&quot;subscriber-alltime-gifter&quot;:{&quot;name&quot;:&quot;&quot;,&quot;amount&quot;:0},&quot;host-latest&quot;:{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8},&quot;raid-latest&quot;:{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8},&quot;cheer-week&quot;:{&quot;amount&quot;:0},&quot;cheer-month&quot;:{&quot;amount&quot;:15},&quot;cheer-total&quot;:{&quot;amount&quot;:55},&quot;cheer-count&quot;:{&quot;count&quot;:55},&quot;cheer-goal&quot;:{&quot;amount&quot;:55},&quot;cheer-latest&quot;:{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:5,&quot;message&quot;:&quot;ShowLove1 ShowLove1 ShowLove1 ShowLove1 ShowLove1&quot;},&quot;tip-latest&quot;:{&quot;name&quot;:&quot;&quot;,&quot;amount&quot;:0},&quot;tip-week&quot;:{&quot;amount&quot;:0},&quot;tip-month&quot;:{&quot;amount&quot;:0},&quot;tip-total&quot;:{&quot;amount&quot;:0},&quot;tip-goal&quot;:{&quot;amount&quot;:0},&quot;merch-goal-orders&quot;:{&quot;amount&quot;:0},&quot;merch-goal-items&quot;:{&quot;amount&quot;:0},&quot;merch-goal-total&quot;:{&quot;amount&quot;:0},&quot;follower-recent&quot;:[{&quot;name&quot;:&quot;deroqui&quot;,&quot;createdAt&quot;:&quot;2022-03-29T20:07:18.784Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;kikigameplay_&quot;,&quot;createdAt&quot;:&quot;2021-10-26T12:16:59.116Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;idwt_iseverywhere&quot;,&quot;createdAt&quot;:&quot;2021-10-17T17:31:01.387Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;idwt_livehere&quot;,&quot;createdAt&quot;:&quot;2021-10-17T17:31:01.065Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312scent&quot;,&quot;createdAt&quot;:&quot;2021-09-28T03:52:49.384Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_you&quot;,&quot;createdAt&quot;:&quot;2021-09-11T04:08:02.453Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_____&quot;,&quot;createdAt&quot;:&quot;2021-09-04T19:43:31.816Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_&quot;,&quot;createdAt&quot;:&quot;2021-08-28T19:27:37.432Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;auggie_cardozo&quot;,&quot;createdAt&quot;:&quot;2021-08-21T01:23:56.265Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;matheuskiiuu&quot;,&quot;createdAt&quot;:&quot;2021-08-18T21:44:40.870Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;taina_liman&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:18:39.326Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;corumbaon&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:16:23.028Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;corumbaplay&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:16:01.700Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;tiekoi&quot;,&quot;createdAt&quot;:&quot;2021-08-05T18:28:36.374Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;strwbrioss&quot;,&quot;createdAt&quot;:&quot;2021-08-05T15:24:26.047Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;twitch_setup_tool&quot;,&quot;createdAt&quot;:&quot;2021-08-03T20:47:17.393Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;remove_hostratelimit&quot;,&quot;createdAt&quot;:&quot;2021-08-01T20:25:52.130Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;pawnlam&quot;,&quot;createdAt&quot;:&quot;2021-08-01T19:02:51.558Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;golang_ontop&quot;,&quot;createdAt&quot;:&quot;2021-08-01T15:51:25.443Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;ily_shiba&quot;,&quot;createdAt&quot;:&quot;2021-08-01T10:44:01.111Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;twitchtwitchtwitchx3&quot;,&quot;createdAt&quot;:&quot;2021-08-01T09:22:13.458Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;leom4dness&quot;,&quot;createdAt&quot;:&quot;2021-07-31T21:46:08.216Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;thetwitchauthority_e0244&quot;,&quot;createdAt&quot;:&quot;2021-07-31T21:12:26.168Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;grilomagalhaes&quot;,&quot;createdAt&quot;:&quot;2021-07-17T22:21:46.993Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;zecaurubu22&quot;,&quot;createdAt&quot;:&quot;2021-07-10T20:44:34.209Z&quot;,&quot;type&quot;:&quot;follower&quot;}],&quot;subscriber-recent&quot;:[{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:3,&quot;createdAt&quot;:&quot;2021-07-10T19:36:53.758Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;tier&quot;:&quot;1000&quot;,&quot;amount&quot;:2,&quot;createdAt&quot;:&quot;2021-07-10T19:30:20.082Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:2,&quot;createdAt&quot;:&quot;2021-06-05T21:42:56.083Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-24T21:35:59.605Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;tiagoduraes34&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-24T17:56:24.462Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;bruxoloro&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-17T23:53:18.932Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;tier&quot;:&quot;1000&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-17T03:41:47.091Z&quot;,&quot;type&quot;:&quot;subscriber&quot;}],&quot;host-recent&quot;:[{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-06-05T21:21:14.750Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:6,&quot;createdAt&quot;:&quot;2021-05-29T20:37:13.920Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-05-19T22:22:36.091Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-05-01T21:08:23.340Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-04-24T21:00:09.139Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;biatando&quot;,&quot;amount&quot;:13,&quot;createdAt&quot;:&quot;2021-04-21T23:40:57.438Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-04-21T22:06:41.226Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;tavernaonline&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-04-13T00:27:54.525Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-04-13T00:00:43.221Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-04-10T21:02:40.874Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;aqualua&quot;,&quot;amount&quot;:82,&quot;createdAt&quot;:&quot;2021-04-10T18:11:38.449Z&quot;,&quot;type&quot;:&quot;host&quot;}],&quot;raid-recent&quot;:[{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-06-05T21:21:14.774Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-05-29T20:37:13.737Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-05-19T22:22:35.842Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-05-01T21:08:26.834Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-04-24T21:00:08.814Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;biatando&quot;,&quot;amount&quot;:12,&quot;createdAt&quot;:&quot;2021-04-21T23:40:57.399Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-04-21T22:06:40.805Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;tavernaonline&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-04-13T00:27:54.850Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:12,&quot;createdAt&quot;:&quot;2021-04-13T00:00:42.890Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-04-10T21:02:40.440Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;aqualua&quot;,&quot;amount&quot;:100,&quot;createdAt&quot;:&quot;2021-04-10T18:11:38.228Z&quot;,&quot;type&quot;:&quot;raid&quot;}],&quot;cheer-recent&quot;:[{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-08-07T18:56:19.762Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-31T19:20:36.772Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-07-17T19:28:45.277Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:9,&quot;createdAt&quot;:&quot;2021-07-17T19:27:28.256Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-10T20:22:36.531Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-10T20:16:57.105Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;johnvcae&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-05-29T20:32:37.765Z&quot;,&quot;type&quot;:&quot;cheer&quot;}],&quot;tip-recent&quot;:[],&quot;merch-recent&quot;:[],&quot;cheer-alltime-top-donation&quot;:{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:10},&quot;cheer-alltime-top-donator&quot;:{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:25},&quot;cheer-monthly-top-donation&quot;:{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:10},&quot;cheer-monthly-top-donator&quot;:{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:15},&quot;merch-latest&quot;:{&quot;amount&quot;:0,&quot;items&quot;:[],&quot;name&quot;:&quot;&quot;},&quot;cheer-session&quot;:{&quot;amount&quot;:0},&quot;cheer-session-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;cheer-session-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;cheer-weekly-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;cheer-weekly-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;follower-session&quot;:{&quot;count&quot;:7},&quot;subscriber-gifted-session&quot;:{&quot;count&quot;:0},&quot;subscriber-new-session&quot;:{&quot;count&quot;:0},&quot;subscriber-resub-session&quot;:{&quot;count&quot;:0},&quot;subscriber-session&quot;:{&quot;count&quot;:0},&quot;tip-alltime-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-alltime-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-count&quot;:{&quot;count&quot;:0},&quot;tip-monthly-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-monthly-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-session&quot;:{&quot;amount&quot;:0},&quot;tip-session-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-session-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-weekly-top-donation&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;},&quot;tip-weekly-top-donator&quot;:{&quot;amount&quot;:0,&quot;name&quot;:&quot;&quot;}}},&quot;recents&quot;:[{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:3,&quot;createdAt&quot;:&quot;2021-07-10T19:36:53.758Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;tier&quot;:&quot;1000&quot;,&quot;amount&quot;:2,&quot;createdAt&quot;:&quot;2021-07-10T19:30:20.082Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:2,&quot;createdAt&quot;:&quot;2021-06-05T21:42:56.083Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;eusoumaboy&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-24T21:35:59.605Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;tiagoduraes34&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-24T17:56:24.462Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;bruxoloro&quot;,&quot;tier&quot;:&quot;prime&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-17T23:53:18.932Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;tier&quot;:&quot;1000&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-04-17T03:41:47.091Z&quot;,&quot;type&quot;:&quot;subscriber&quot;},{&quot;name&quot;:&quot;deroqui&quot;,&quot;createdAt&quot;:&quot;2022-03-29T20:07:18.784Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;kikigameplay_&quot;,&quot;createdAt&quot;:&quot;2021-10-26T12:16:59.116Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;idwt_iseverywhere&quot;,&quot;createdAt&quot;:&quot;2021-10-17T17:31:01.387Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;idwt_livehere&quot;,&quot;createdAt&quot;:&quot;2021-10-17T17:31:01.065Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312scent&quot;,&quot;createdAt&quot;:&quot;2021-09-28T03:52:49.384Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_you&quot;,&quot;createdAt&quot;:&quot;2021-09-11T04:08:02.453Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_____&quot;,&quot;createdAt&quot;:&quot;2021-09-04T19:43:31.816Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;hoss00312_&quot;,&quot;createdAt&quot;:&quot;2021-08-28T19:27:37.432Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;auggie_cardozo&quot;,&quot;createdAt&quot;:&quot;2021-08-21T01:23:56.265Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;matheuskiiuu&quot;,&quot;createdAt&quot;:&quot;2021-08-18T21:44:40.870Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;taina_liman&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:18:39.326Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;corumbaon&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:16:23.028Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;corumbaplay&quot;,&quot;createdAt&quot;:&quot;2021-08-12T19:16:01.700Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;tiekoi&quot;,&quot;createdAt&quot;:&quot;2021-08-05T18:28:36.374Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;strwbrioss&quot;,&quot;createdAt&quot;:&quot;2021-08-05T15:24:26.047Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;twitch_setup_tool&quot;,&quot;createdAt&quot;:&quot;2021-08-03T20:47:17.393Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;remove_hostratelimit&quot;,&quot;createdAt&quot;:&quot;2021-08-01T20:25:52.130Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;pawnlam&quot;,&quot;createdAt&quot;:&quot;2021-08-01T19:02:51.558Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;golang_ontop&quot;,&quot;createdAt&quot;:&quot;2021-08-01T15:51:25.443Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;ily_shiba&quot;,&quot;createdAt&quot;:&quot;2021-08-01T10:44:01.111Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;twitchtwitchtwitchx3&quot;,&quot;createdAt&quot;:&quot;2021-08-01T09:22:13.458Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;leom4dness&quot;,&quot;createdAt&quot;:&quot;2021-07-31T21:46:08.216Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;thetwitchauthority_e0244&quot;,&quot;createdAt&quot;:&quot;2021-07-31T21:12:26.168Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;grilomagalhaes&quot;,&quot;createdAt&quot;:&quot;2021-07-17T22:21:46.993Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;zecaurubu22&quot;,&quot;createdAt&quot;:&quot;2021-07-10T20:44:34.209Z&quot;,&quot;type&quot;:&quot;follower&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-08-07T18:56:19.762Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-31T19:20:36.772Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:1,&quot;createdAt&quot;:&quot;2021-07-17T19:28:45.277Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;meldriell&quot;,&quot;amount&quot;:9,&quot;createdAt&quot;:&quot;2021-07-17T19:27:28.256Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-10T20:22:36.531Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;anna__juuh&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-07-10T20:16:57.105Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;johnvcae&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-05-29T20:32:37.765Z&quot;,&quot;type&quot;:&quot;cheer&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-06-05T21:21:14.750Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:6,&quot;createdAt&quot;:&quot;2021-05-29T20:37:13.920Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-05-19T22:22:36.091Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-05-01T21:08:23.340Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-04-24T21:00:09.139Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;biatando&quot;,&quot;amount&quot;:13,&quot;createdAt&quot;:&quot;2021-04-21T23:40:57.438Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-04-21T22:06:41.226Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;tavernaonline&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-04-13T00:27:54.525Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-04-13T00:00:43.221Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-04-10T21:02:40.874Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;aqualua&quot;,&quot;amount&quot;:82,&quot;createdAt&quot;:&quot;2021-04-10T18:11:38.449Z&quot;,&quot;type&quot;:&quot;host&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:8,&quot;createdAt&quot;:&quot;2021-06-05T21:21:14.774Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;pingaoficial&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-05-29T20:37:13.737Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-05-19T22:22:35.842Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:7,&quot;createdAt&quot;:&quot;2021-05-01T21:08:26.834Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:10,&quot;createdAt&quot;:&quot;2021-04-24T21:00:08.814Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;biatando&quot;,&quot;amount&quot;:12,&quot;createdAt&quot;:&quot;2021-04-21T23:40:57.399Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-04-21T22:06:40.805Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;tavernaonline&quot;,&quot;amount&quot;:5,&quot;createdAt&quot;:&quot;2021-04-13T00:27:54.850Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;caixinhatv&quot;,&quot;amount&quot;:12,&quot;createdAt&quot;:&quot;2021-04-13T00:00:42.890Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;riomaro_&quot;,&quot;amount&quot;:11,&quot;createdAt&quot;:&quot;2021-04-10T21:02:40.440Z&quot;,&quot;type&quot;:&quot;raid&quot;},{&quot;name&quot;:&quot;aqualua&quot;,&quot;amount&quot;:100,&quot;createdAt&quot;:&quot;2021-04-10T18:11:38.228Z&quot;,&quot;type&quot;:&quot;raid&quot;}],&quot;currency&quot;:{&quot;code&quot;:&quot;USD&quot;,&quot;name&quot;:&quot;U.S. Dollar&quot;,&quot;symbol&quot;:&quot;$&quot;},&quot;channel&quot;:{&quot;username&quot;:&quot;morte_mors&quot;,&quot;apiToken&quot;:&quot;pPQXkmGN-i3fdU5sAbQpRMvMJLL3znPJIomNkmZxMuJfvYih&quot;,&quot;id&quot;:&quot;5e9cbd978dbdf516e2b6b134&quot;,&quot;providerId&quot;:&quot;216614855&quot;,&quot;avatar&quot;:&quot;https://static-cdn.jtvnw.net/jtv_user_pictures/fc81dbfc-d68b-401c-ba3c-914c6578aae8-profile_image-300x300.png&quot;},&quot;fieldData&quot;:{&quot;emularChat&quot;:&quot;emular&quot;,&quot;permMod&quot;:true,&quot;permVip&quot;:0,&quot;permNormal&quot;:0,&quot;bordaAvatar&quot;:&quot;#0013A3&quot;,&quot;fundoAvatar&quot;:&quot;#5c2c89&quot;,&quot;hearts&quot;:&quot;#A750F9&quot;,&quot;heartLogo&quot;:&quot;#FFFFFF&quot;,&quot;balloonConheca&quot;:&quot;#A750F9&quot;,&quot;blockUsername&quot;:&quot;#0013A3&quot;,&quot;balloonJogando&quot;:&quot;#A750F9&quot;,&quot;blockJogando&quot;:&quot;#0013A3&quot;,&quot;conheca&quot;:&quot;#FFFFFF&quot;,&quot;twitchtv&quot;:&quot;#FFFFFF&quot;,&quot;username&quot;:&quot;#FFFFFF&quot;,&quot;jogando&quot;:&quot;#FFFFFF&quot;,&quot;jogo&quot;:&quot;#FFFFFF&quot;,&quot;widgetName&quot;:&quot;!s2 ShoutOut&quot;,&quot;widgetAuthor&quot;:&quot;Nyokeon&quot;,&quot;emulation&quot;:&quot;emular&quot;,&quot;soundVolume&quot;:100,&quot;language&quot;:&quot;pt-br&quot;,&quot;emulateShoutout&quot;:&quot;emulate&quot;,&quot;soundAlert&quot;:null,&quot;soundAlert2&quot;:null,&quot;soundAlert3&quot;:null,&quot;raidTrigger&quot;:false,&quot;raidInterval&quot;:10,&quot;invert&quot;:false,&quot;jogandoBackground&quot;:&quot;#0013A3&quot;},&quot;overlay&quot;:{&quot;isEditorMode&quot;:false,&quot;muted&quot;:false}}`
+  
+      const e = new CustomEvent('onWidgetLoad', {
+          detail: JSON.parse(initData)
+      });
+  
+      window.dispatchEvent(e);
+  });
+  
+  const SE_API = {
+    responses: {},
+    sendMessage: (message, data = {}) => {
+      return new Promise((resolve, reject) => {
+        const response = 'resp_' + Math.random().toString(16).substr(2);
+        data.response = response;
+        data.request = message;
+        SE_API.responses[response] = { resolve, reject };
+        parent.postMessage(data, '*');
+      });
+    },
+    counters: {
+      get: key => {
+        return SE_API.sendMessage('counter_get', { key });
+      }
+    },
+    store: {
+      get: key => {
+        return SE_API.sendMessage('store_get', { key });;
+      },
+      set: (key, value) => {
+        return SE_API.sendMessage('store_set', { key, value });;
+      }
+    },
+    resumeQueue: () => {
+      return SE_API.sendMessage('resume_queue');
+    },
+    sanitize: (message) => {
+      return SE_API.sendMessage('sanitize', { message });
+    },
+    cheerFilter: (message) => {
+      return SE_API.sendMessage('cheer_filter', { message });
+    },
+    setField: (key, value, reload) => {
+      return SE_API.sendMessage('set_field', { key, value, reload });
+    },
+    getOverlayStatus: () => {
+      return SE_API.sendMessage('overlay_status');
+    }
+  };
+  
+  
+  
+  window.onclick=function(o){o.stopImmediatePropagation()},document.addEventListener(&quot;click&quot;,function(o){o.preventDefault(),o.stopPropagation(),o.stopImmediatePropagation()}),window.open=function(){};var $_console$$=console;Object.defineProperty(window,&quot;console&quot;,{get:function(){if($_console$$._commandLineAPI)throw&quot; &quot;;return $_console$$},set:function(o){$_console$$=o}});
+  </script>
+        <style>@import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@800&amp;display=swap');
+  
+  .main-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .balloon-container {
+    width: 600px;
+    height: 800px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    font-family: 'Baloo Chettan 2', cursive;
+  }
+  
+  .s2-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .balloon-container.reverse {
+    transform: scaleX(-1);
+  }
+  
+  .balloon-container.reverse .s2-container, 
+  .balloon-container.reverse .infos, 
+  .balloon-container.reverse .avatar-container {
+    transform: scaleX(-1);
+  }
+  
+  
+  .balloon-container .complete {
+    transform: scale(0);
+    opacity: 0;
+  }
+  
+  
+  .balloon-container .heart {
+    position: absolute;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  
+  .balloon-container .balloon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    -webkit-transform-origin: 100% 0;
+    -ms-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .balloon-container .balloon path {
+    fill: #A750F9;
+  }
+  
+  .balloon-container .logo {
+    opacity: 1;
+    position: absolute;
+    z-index: 2;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    width: 460px;
+    height: 460px;
+    top: 0;
+    bottom: 124px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: block;
+  }
+  
+  .balloon-container::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .balloon-container .infos {
+    position: absolute;
+    z-index: 1;
+    width: 560px;
+    height: 560px;
+    left: 0px;
+    top: 0px;
+  }
+  
+  .balloon-container.reverse .infos {
+    left: auto;
+    right: 50px
+  }
+  
+  .balloon-container .infos span {
+    display: block;
+    line-height: 0.9;
+  }
+  
+  .balloon-container .infos span.conheca, .balloon-container .infos span.jogando {
+    background-color: #505050;
+    color: #fff;
+    font-size: 110px;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+    letter-spacing: -0.075em;
+    line-height: 0.75;
+    opacity: 0;
+    position: absolute;
+    left: -20px;
+    padding-bottom: 26px;
+    padding-top: 6px;
+    width: 632px;
+  }
+  
+  .balloon-container .infos span.jogando {
+    top: 14px;
+  }
+  .balloon-container .infos span.conheca {
+    top: 14px;
+  }
+  /* texto twitch/ */
+  .balloon-container .infos span.twitch {
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+    left: -16px;
+    text-transform: uppercase;
+    opacity: 0;
+    bottom: -100px;
+    position: absolute;
+  }
+  
+  .balloon-container .infos span.username, .balloon-container .infos span.jogo {
+    position: absolute;
+    background-color: #1ED3D1;
+    color: #fff;
+    font-weight: bold;
+    font-size: 48px;
+    width: 632px;
+    text-align: center;
+    left: -16px;
+    right: 0;
+    bottom: -82px;
+    line-height: 60px;
+    padding-bottom: 6px;
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  
+  
+  .balloon-container .infos span.username.show, .balloon-container .infos span.jogo.show {
+    opacity: 1;
+    -webkit-animation: 0.5s bounceInProfile;
+    animation: 0.5s bounceInProfile;
+  }
+  
+  /* foto de quem está sendo divulgado */
+  .balloon-container .profile {
+    position: absolute;
+    right: 100px;
+    top: 150px;
+    width: 370px;
+    height: 370px;
+    z-index: 2;
+    border-radius: 10%;
+    overflow: hidden;
+    border: 16px solid #1ED3D1;
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    background-color: #A750F9;
+    -webkit-box-shadow: inset 0 0 0 370px rgba(0, 0, 0, 0.45), 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 0 370px rgba(0, 0, 0, 0.45), 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .balloon-container .profile.sombra {
+    -webkit-box-shadow: 0 0px 16px 4px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0px 16px 4px rgba(0, 0, 0, 0.35);
+    mix-blend-mode: overlay;
+  }
+  
+  .balloon-container .profile img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+  }
+  
+  .balloon-container .infos span.conheca {color: #FFFFFF !important;}
+  .balloon-container .infos span.jogando {color: #FFFFFF !important;}
+  .balloon-container .infos span.twitch {color: #FFFFFF !important;}
+  
+  .balloon-container .infos span.username {
+        border-radius: 50px;
+      background-color: #0013A3 !important;
+      color: #FFFFFF !important;
+  }
+  .balloon-container .infos span.jogo {
+         border-radius: 50px;
+      background-color: #0013A3 !important;
+      color: #FFFFFF !important;
+  }
+  
+  .balloon-container .profile {
+      border: 16px solid #0013A3 !important;
+      background-color: #5c2c89 !important;
+  }
+  
+  .balloon-container .infos span.conheca, .balloon-container .infos span.jogando {
+    border-radius: 50px;
+    background-color: #0013A3 !important;
+  }</style>
+        </head>
+        <body style=&quot;width:{iframeSize.width};height:920px;&quot;>
+        <div class=&quot;main-container&quot;>
+    <div class=&quot;balloon-container&quot;>
+      <div class=&quot;hearts&quot;>
+       </div>
+      <div class=&quot;balloon&quot;>
+        <div class=&quot;complete&quot;>
+          <!-- 
+          <img id=&quot;balloonBG&quot; class=&quot;balloonBG&quot; data-name=&quot;balloonBG&quot; src=&quot;https://img.freepik.com/fotos-gratis/textura-preta_1205-327.jpg?size=626&amp;ext=jpg&amp;ga=GA1.2.1356500412.1617148800&quot; width=&quot;700&quot; height=&quot;700&quot;>
+           -->
+          
+          <div class=&quot;s2-container&quot;>
+                   <!-- 
+            <img id=&quot;s2&quot; class=&quot;logo&quot; data-name=&quot;s2&quot; src=&quot;https://www.pinclipart.com/picdir/big/180-1800122_cartoon-skeleton-head-png-clipart.png&quot; width=&quot;50&quot; height=&quot;50&quot;>
+            -->
+          </div>
+        </div>
+  
+        <div class=&quot;infos&quot;>
+            <span class=&quot;conheca&quot;>Co<br>nhe<br>ça</span>
+            <span class=&quot;jogando&quot;>Jo<br>gan<br>do</span>
+            <!--<span class=&quot;twitch&quot;>twitch.tv/</span>-->
+        </div>
+      </div>
+      <div class=&quot;infos&quot;>
+        <span class=&quot;username&quot;>UserName</span>
+        <span class=&quot;jogo&quot;>MyGame</span>
+      </div>
+      <div class=&quot;avatar-container&quot;>
+        <div class=&quot;profile&quot;>     
+          <img src=&quot;https://cdn.streamelements.com/static/user/avatar_default.png&quot;>
+        </div>
+      </div>
+    </div>
+  </div>
+        <script>// Import GreenSocks Library
+  $.getScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js');
+  
+  // Global Variables
+  let $fieldData,
+      $currentUser,
+      $lastUsernameShouted,
+      $timeLine,
+      $messageCopy = null,
+      $queue       = []       // Array for the queue list
+      $isRunning   = false,   // Var to check if overlay is running for the callback
+      $audio1      = false,   // Audio when the overlay show
+      $audio2      = false,   // Audio when the first page show
+      $audio3      = false,   // Audio when the second page show
+      $onRaid      = false,   // Var to check if is to execute on Raid Received
+      $onRaidDelay = 10;      // Var to add the username in the query after the raid received
+  
+  // Translations
+  const $translations = {
+      'pt-br': {
+          conheca: &quot;Conheça&quot;,
+          jogando: &quot;Stremando&quot;,
+      },
+      'en-us': {
+          conheca: &quot;Fea<br>tur<br>ing&quot;,
+          jogando: &quot;Str<br>eam<br>ing&quot;,
+      }
+  }
+  
+  // onWidgetLoad
+  window.addEventListener('onWidgetLoad', function (obj) {
+      $fieldData   = obj.detail.fieldData;
+      $currentUser = obj.detail.channel.username;
+  
+      // Set the language
+        let language = $fieldData.language || 'pt-br';
+      $(&quot;.balloon-container .infos .conheca&quot;).html($translations[language].conheca);
+      $(&quot;.balloon-container .infos .jogando&quot;).html($translations[language].jogando);
+    
+        $onRaid       = $fieldData.raidTrigger || false;
+      $onRaidDelay  = $fieldData.raidInterval || 10;
+    
+        // Set audios and audios volume (volume) 
+      if ($fieldData.soundAlert) {
+        $audio1        = new Audio();
+        $audio1.src    = $fieldData.soundAlert;
+        $audio1.volume = $fieldData.soundVolume / 100;
+      }
+        if ($fieldData.soundAlert2) {
+        $audio2        = new Audio();
+        $audio2.src    = $fieldData.soundAlert2;
+        $audio2.volume = $fieldData.soundVolume / 100;
+      }
+        if ($fieldData.soundAlert3) {
+        $audio3        = new Audio();
+        $audio3.src    = $fieldData.soundAlert3;
+        $audio3.volume = $fieldData.soundVolume / 100;
+      }
+  });
+  
+  // onEventReceived
+  window.addEventListener('onEventReceived', function (obj) {
+      // If there is no event, do nothing.
+      if (!obj.detail.event) {return;}
+  
+      // The event
+        const listener = obj.detail.listener;
+      const event    = obj.detail.event;
+    
+      // If we want to test the overlay, emulate it with the current user (aka YOU);
+      if (listener === 'event:test') {
+          // If the field and value are from our fields.
+          if (event.field === 'emulateShoutout' &amp;&amp; event.value === 'emulate') {
+              // Add YOU to the query and RUN the overlay
+              $queue.push($currentUser);
+              run();
+          }
+      }
+      
+      // If it's a chat message
+      if (listener === 'message') {
+            
+          // Make a array with every word and check
+          const message = event.data.text.split(' ');
+            
+          if (message.length > 1) {
+                            
+              // Array of permissions that are allowed to trigger the widget
+              let permConfig = [&quot;broadcaster&quot;];
+              if ($fieldData.permNormal === true) {permConfig.push(&quot;&quot;);}
+              if ($fieldData.permVip === true) {permConfig.push(&quot;vip&quot;);}
+              if ($fieldData.permMod === true) {permConfig.push(&quot;moderator&quot;);}
+  
+              // get permissions
+              const permissions = event.data.tags.badges.replace(/,/g, '').replace(/\d+/g, '').split('/');
+              // get username
+              const username = message[1].replace('@', '').trim().toLowerCase();
+              // get the trigger
+              const trigger = message[0].toLowerCase();
+              // check if the user who sent the message can trigger the overlay
+              const canTrigger = permConfig.some(r => permissions.indexOf(r) >= 0)
+              // get the trigger
+              
+              
+              // if the trigger word (message[0]) is the trigger, user can trigger and the username wasn't the last username shouted in the last 3.5s
+              if (trigger == '!div'  &amp;&amp; canTrigger &amp;&amp; ($lastUsernameShouted != username)) {
+                    $messageCopy = null
+                  if(message.length > 2) {
+                    $messageCopy = message.splice(2).join(' ')
+                  }	
+                  // set last username shouted to be the actual user
+                  $lastUsernameShouted = username;
+                  // set a timeout to set last user shouted be false so we can repeat him/her later
+                  setTimeout(() => {$lastUsernameShouted = false}, 3000);
+                  // Add the USER to the query and RUN the overlay
+                  $queue.push(username);
+                  run();
+              }
+          }
+      }
+        if (listener === 'raid-latest' &amp;&amp; $onRaid) {
+        setTimeout( () => {
+            $queue.push(event.name);
+            run();
+        },$onRaidDelay * 1000);
+      }
+  });
+  
+  
+  
+  // Ajax calls and query management, this acts as callback for animate too.
+  function run() {
+  
+      let avatar,
+          game,
+          name;
+  
+      // Check if the animation is not running and if there is queued users.
+      // It is necessary to not overlap any running animation and remove anyone queued without being featured.
+      if ($isRunning == false &amp;&amp; $queue.length > 0) {
+          $isRunning = true;
+  
+          // Urls to fetch information about the user, thanks decapi and streamelements <3
+          const urls = [
+              'https://decapi.me/twitch/avatar/' + $queue[0],
+              'https://decapi.me/twitch/game/' + $queue[0]
+          ];
+  
+          // Make a promisse with the urls and get the infos from the responses
+          Promise.all(urls.map(u => fetch(u)))
+              .then(responses => Promise.all(responses.map(res => res.text())))
+              .then(responses => {
+                  avatar = responses[0];
+                  game   = responses[1];
+                  name   = $queue[0];
+  
+                  // Make the animation run
+                  animate(name, game, avatar);
+              });
+      }
+  }
+  
+  
+  
+  // Animation timeline and elements manipulation
+  function animate(name, game, avatar) {
+        if ($fieldData.invert) {
+         $('.balloon-container').addClass('reverse');
+      } else {
+         $('.balloon-container').removeClass('reverse');
+      }
+      setTimeout(function () {
+          // If something strange happen or this function is called with an animation being displayed (maybe a bug?), stop it (that is why $timeline is a global variable)
+          if ($timeLine) {$timeLine.pause()};
+  
+          // Create a new timeline
+          $timeLine = gsap.timeline();
+  
+          // Reset everything to initial state
+          $('.balloon-container *').removeAttr('style');
+        
+            // By an unknown reason, i need to add to main-container its own html to unbug the opening animation... its crazy but it's work.
+            $('.main-container').html($('.main-container').html());
+  
+          // Manipulate the elements bellow to show user data
+          $('.username').text(name);
+            if(game.length > 28) {
+                $('.balloon-container .infos span.jogo').attr(&quot;style&quot;, &quot;bottom: -136px;&quot;);
+              $('.jogo').text(game);
+          } else {
+              $('.jogo').text(game);
+          }
+            console.log($messageCopy)
+            $('.jogando').text('stremando');
+        
+            if($messageCopy){
+            $('.jogando').css({
+              fontSize: 110/(parseInt($messageCopy.length/10))
+            });
+          }
+            if($messageCopy){
+            $('.jogando').text($messageCopy);
+          }
+          $('.profile img').attr('src', avatar);
+          
+          // Play the sound if is set
+          if ($audio1) {$audio1.play()};
+  
+          // Play the animation, don't ask me details, just google &quot;greensocks timeline&quot;
+         $timeLine.call(function () {
+              $('.balloon-container .balloon').addClass(&quot;phase2&quot;);
+              if ($audio2) {$audio2.play()};
+          }, null, null, 2)
+            
+            
+            .to('.balloon-container .balloon', {
+              scaleX: 1,
+              opacity: 1,
+              ease: Bounce.EaseIn,
+              duration: 0.0
+          }, &quot;<&quot;).to('.balloon-container .conheca', {
+              opacity: 1,
+              ease: Bounce.EaseOut,
+              duration: 0
+          }, &quot;<&quot;).to('.balloon-container .profile', {
+              scale: 1.3,
+              opacity: 1,
+              ease: Bounce.linear,
+              duration: 0.8
+          }, &quot;<&quot;).to('.balloon-container .profile', {
+              scale: 1,
+              ease: Bounce.linear,
+              duration: 0.2
+          }).to('.balloon-container .twitch', {
+              opacity: 1,
+              duration: 0.2
+          }).to('.balloon-container .username', {
+              scale: 1.3,
+              opacity: 1,
+              ease: Bounce.linear,
+              duration: 0.2
+          }, &quot;<&quot;).to('.balloon-container .username', {
+              scale: 1,
+              ease: Bounce.linear,
+              duration: 0.2
+          }).to('.balloon-container .username', {
+              scale: 1.1,
+              duration: 0,
+              delay: 4
+          }, &quot;>&quot;).to('.balloon-container .username', {
+              scale: 1,
+              ease: Elastic.EaseInOut,
+              repeat: 1,
+              duration: 0.3
+          }).to('.balloon-container .username', {
+              scale: 1.2,
+              ease: Bounce.EaseIn,
+              duration: 0.2
+          }, &quot;<&quot;).to('.balloon-container .username', {
+              scale: 0,
+              opacity: 0,
+              ease: Bounce.EaseOut,
+              duration: 0.5
+          }, &quot;<0.2&quot;).to('.balloon-container .balloon', {
+              scaleX: 0.05,
+              opacity: 0.1,
+              ease: Bounce.EaseOut,
+              duration: 0.35
+          }, &quot;<0.2&quot;).to('.balloon-container .username', {
+              scale: 0,
+              opacity: 0,
+              duration: 0
+          }).to('.balloon-container .twitch', {
+              opacity: 0,
+              duration: 0
+          }, &quot;<&quot;).to('.balloon-container .conheca', {
+              opacity: 0,
+              duration: 0
+          }, &quot;<&quot;)
+            
+            .call(function () {
+              $('.balloon-container .balloon').addClass(&quot;phase2&quot;);
+              if ($audio3) {$audio3.play()};
+          }, null, null, 2)
+            
+            .to('.balloon-container .balloon', {
+              scaleX: 1,
+              opacity: 1,
+              ease: Bounce.EaseIn,
+              duration: 0.35
+          }, &quot;<&quot;).to('.balloon-container .jogando', {
+              opacity: 1,
+              ease: Bounce.EaseOut,
+              duration: 0
+          }, &quot;<&quot;).to('.balloon-container .jogo', {
+              scale: 1.3,
+              opacity: 1,
+              ease: Bounce.linear,
+              duration: 0.2
+          }).to('.balloon-container .jogo', {
+              scale: 1,
+              ease: Bounce.linear,
+              duration: 0.2
+          }).to('.balloon-container .jogo', {
+              scale: 1.1,
+              duration: 0,
+              delay: 4
+          }, &quot;>&quot;).to('.balloon-container .jogo', {
+              scale: 1,
+              ease: Elastic.EaseInOut,
+              repeat: 1,
+              duration: 0.3
+          }).to('.balloon-container .jogo', {
+              scale: 1.2,
+              ease: Bounce.EaseIn,
+              duration: 0.2
+          }, &quot;<&quot;).to('.balloon-container .jogo', {
+              scale: 0,
+              opacity: 0,
+              ease: Bounce.EaseOut,
+              duration: 0.5
+          }, &quot;<0.2&quot;).to('.balloon-container .profile', {
+              scale: 1.2,
+              ease: Bounce.EaseIn,
+              duration: 0.2
+          }, &quot;<&quot;).to('.balloon-container .profile', {
+              scale: 0,
+              opacity: 0,
+              ease: Bounce.EaseOut,
+              duration: 0.5
+          }, &quot;<0.2&quot;).to('.balloon-container .balloon', {
+              scaleX: 0,
+              opacity: 0,
+              ease: Bounce.EaseOut,
+              duration: 0.35
+          }, &quot;<&quot;).to('.balloon-container .jogando', {
+              opacity: 0,
+              ease: Bounce.linear,
+              duration: 0,
+              onComplete: function () {
+                  $('.balloon-container *').removeAttr('style');
+                  $('.balloon').removeClass('phase2');
+                  // Set isRunning False;   Call CallBack to see if there is more to execute
+                  $isRunning = false;
+                  // Remove the user from the queue list;
+                  $queue.shift();
+                  // Call run to see if there is queued users
+                  run();
+              }
+          });
+          
+      }, 1500);
+  }</script>
+        <!-- Code injected by live-server -->
+<script type=" text="" javascript"="">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script></body>
+        </html>" style="width:920px;height:920px;" allow="autoplay"></iframe>
+    
+<!-- Code injec--></body></html>
