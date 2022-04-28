@@ -12,7 +12,8 @@ let includeHosts = true,
 	bottomTextReplaced = "",
 	topTextReplaced = "",
 	isPlaying = false,
-	queue = [];
+	queue = [],
+    caseName = "";
 
 let totalEvents = 0;
 
@@ -30,6 +31,7 @@ window.addEventListener('onEventReceived', function (obj) {
     if (listener === 'message') {
       	text = event.data.text.toLowerCase()
       	if(text.split(" ")[0] === command && (event.data["badges"][0]["type"] === "broadcaster" || event.data["badges"][0]["type"] === "moderator")) {
+          	caseName = event.data.text.split(" ")[1].replace(/[@]/,'')
           	queue.push(text.split(" ")[1].replace(/[@]/, ''))
           	playQueue()
         } 
@@ -70,6 +72,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
   	backgroundTime = fieldData.backgroundTime;
   
      if(debug) {
+        caseName = "Morte_Mors"
        	queue.push("Morte_Mors")
        	playQueue()
      };
@@ -97,8 +100,8 @@ function queryDecapi(user) {
                 name   = user;
           		
 				
-          		topTextReplaced = topText.replace("*user*", name).replace("*title*", title).replace("*game*", game)
-          		bottomTextReplaced = bottomText.replace("*user*", name).replace("*title*", title).replace("*game*", game)
+          		topTextReplaced = topText.replace("*user*", caseName).replace("*title*", title).replace("*game*", game)
+          		bottomTextReplaced = bottomText.replace("*user*", caseName).replace("*title*", title).replace("*game*", game)
           		animation(avatar, bottomTextReplaced, topTextReplaced)
             });
 }
